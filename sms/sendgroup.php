@@ -1,9 +1,5 @@
 <?php
-$conn = mysql_connect("localhost", 'bruce', 'Pass01');
-if (!$conn) {
-    die('Could not connect to database ' . mysql_error());
- }
-mysql_select_db('churchcrm');
+require "../Include/Config.php";
 $query = "SELECT * FROM group_grp ORDER BY grp_ID";
 $result = mysql_query($query);
 if(!$result) die(mysql_error());

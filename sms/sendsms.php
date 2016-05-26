@@ -1,5 +1,13 @@
 <?php
 
+require "../Include/Config.php";
+$hasSession = isset($_SESSION['iUserID']);
+$redirectTo = ($hasSession) ? '/menu' : '/login';
+if (!$hasSession)
+{
+  // Must show login form if no session
+  require '../Login.php';
+}
 error_reporting(E_ALL);
 ########################################################
 # Login information for the SMS Gateway

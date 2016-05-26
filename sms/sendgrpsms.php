@@ -1,4 +1,13 @@
 <?php
+require "../Include/Config.php";
+$hasSession = isset($_SESSION['iUserID']);
+$redirectTo = ($hasSession) ? '/menu' : '/login';
+if if (!$hasSession)
+{
+  // Must show login form if no session
+  require '../Login.php';
+}
+
 $ozeki_user = "church";
 $ozeki_password = "Pass01";
 $ozeki_url = "http://127.0.0.1:13013/cgi-bin/sendsms?";
@@ -54,16 +63,10 @@ function ozekiSend($phone, $msg, $debug=false){
 $group = $_POST['grp_ID'];
 $message = $_POST['messagetext'];
 $message = addslashes($message);
-$conn = mysql_connect("localhost", 'bruce', 'Pass01');
-if (!$conn) {
-    die('Could not connect to database ' . mysql_error());
- }
-mysql_select_db('churchcrm');
 $query = "select per_CellPhone,per_ID from person_per where per_ID  in (select p2g2r_per_ID from person2group2role_p2g2r where p2g2r_grp_ID='$group')";
 //$query2 = "insert into church.messageout(receiver,msg) values (
 $result = mysql_query($query);
 if(!$result) die(mysql_error());
-
 while ($row = mysql_fetch_array($result)) {
      $mobile=$row['per_CellPhone'];
 $mobile = str_replace("(","",$mobile);
@@ -75,7 +78,7 @@ $query2 = "insert into messageout (receiver,msg,status) values ('$mobile','$mess
 $result2 = mysql_query($query2);
 if (!$result2) die(mysql_error());
 }
-sleep(2);
+//sleep(2);
 //send messages
 $query3 = "select * from messageout where status = 'tosend'";
 $result3 = mysql_query($query3);
