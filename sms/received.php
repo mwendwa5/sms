@@ -4,11 +4,12 @@
 require "../Include/Config.php";
 require "../Include/Functions.php";
 
-$sPageTitle = gettext("Send Single Text");
+$sPageTitle = gettext("Received Text Messages");
 require "../Include/Header.php"; 
-include ("singlemsg.php");
+include ("fetcher.php");
 
 
 
 
-require "../Include/Footer.php"; ?>
+require "../Include/Footer.php"; 
+?>

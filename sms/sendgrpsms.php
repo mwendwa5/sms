@@ -1,8 +1,11 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require "../Include/Config.php";
 $hasSession = isset($_SESSION['iUserID']);
 $redirectTo = ($hasSession) ? '/menu' : '/login';
-if if (!$hasSession)
+if (!$hasSession)
 {
   // Must show login form if no session
   require '../Login.php';
@@ -60,7 +63,10 @@ function ozekiSend($phone, $msg, $debug=false){
 
       return($response);
 }
+$grpstatus = isset($_POST['grp_ID']);
 $group = $_POST['grp_ID'];
+if(!$grpstatus) header ("Location: sendgroup.php");
+//die();
 $message = $_POST['messagetext'];
 $message = addslashes($message);
 $query = "select per_CellPhone,per_ID from person_per where per_ID  in (select p2g2r_per_ID from person2group2role_p2g2r where p2g2r_grp_ID='$group')";
@@ -95,6 +101,8 @@ $debug = false;
 $result4 = mysql_query($query4);
 if(!$result4) die (mysql_error());
 }
+if(!$grpstatus) header ("Location: sendgroup.php");
+//die();
 $send=1;
 header ("Location: sendgroup.php?send=$send&group=$group");
 ?>
